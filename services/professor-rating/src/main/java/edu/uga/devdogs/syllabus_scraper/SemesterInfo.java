@@ -1,3 +1,5 @@
+package edu.uga.devdogs.syllabus_scraper;
+
 public class SemesterInfo {
     private String semesterCode;
     private String semesterName;

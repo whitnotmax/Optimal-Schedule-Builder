@@ -1,3 +1,5 @@
+package edu.uga.devdogs.syllabus_scraper;
+
 /**
  * Class stores data for hidden aspx values that are required in the body of the post request
  */

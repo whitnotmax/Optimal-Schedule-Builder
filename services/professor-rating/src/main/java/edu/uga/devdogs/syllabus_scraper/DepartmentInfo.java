@@ -1,3 +1,5 @@
+package edu.uga.devdogs.syllabus_scraper;
+
 /**
  * Class holds information about each of the school's department and its following code.
  * The code is to identify which option to select, and the name is the name of the department.

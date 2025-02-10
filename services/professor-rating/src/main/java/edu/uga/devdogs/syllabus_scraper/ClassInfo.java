@@ -1,3 +1,5 @@
+package edu.uga.devdogs.syllabus_scraper;
+
 /**
  * Class stores information about the course class, which includes professor name, the title, and semester.
  */

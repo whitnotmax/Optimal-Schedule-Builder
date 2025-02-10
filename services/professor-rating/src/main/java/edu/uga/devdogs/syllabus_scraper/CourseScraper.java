@@ -1,15 +1,18 @@
+package edu.uga.devdogs.syllabus_scraper;
+
+import edu.uga.devdogs.syllabus_scraper.DepartmentInfo;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import edu.uga.devdogs.syllabus_scraper.AspNetData;
 
 /**
  * A class that allows users to download syllabus depending on multiple parameters.
@@ -104,7 +107,7 @@ public class CourseScraper {
             //Gets the latest semester
             doc = response.parse();
             elements = doc.select("#ddlSemesters > option");
-            Element element = elements.getLast();
+            Element element = elements.get(elements.size() - 1);
 
             String semesterCode = element.attr("value");
             String semesterName = element.text();
@@ -282,7 +285,7 @@ public class CourseScraper {
             //Gets the latest semester
             doc = response.parse();
             elements = doc.select("#ddlSemesters > option");
-            Element element = elements.getLast();
+            Element element = elements.get(elements.size() - 1);
 
             String semesterCode = element.attr("value");
             String semesterName = element.text();
@@ -463,7 +466,7 @@ public class CourseScraper {
             //Gets the latest semester
             doc = response.parse();
             elements = doc.select("#ddlSemesters > option");
-            Element element = elements.getLast();
+            Element element = elements.get(elements.size() - 1);
 
             String semesterCode = element.attr("value");
             String semesterName = element.text();
@@ -567,4 +570,15 @@ public class CourseScraper {
             throw new RuntimeException(e);
         }
     }
+
+    public static void main(String[] args) {
+        String department = "Computer Science";
+        String instructor = "John Doe";
+        String path = "C:/Users/whits/OneDrive/Desktop/syllabus";
+
+        CourseScraper.downloadAllSyllabusByCourse("Management Information Systems", "MIST 2090", path);
+        CourseScraper.downloAD
+    }
 }
+
+
