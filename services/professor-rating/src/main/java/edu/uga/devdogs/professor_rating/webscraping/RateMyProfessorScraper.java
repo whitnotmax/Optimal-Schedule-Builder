@@ -96,10 +96,10 @@ public class RateMyProfessorScraper {
 
     }
 
-    public static int getDifficultyLevel(int id) {
+    public static double getDifficultyLevel(int id) {
         String difficultyLevel = getStyledFeedbackItem(id, 1);
 
-        return Integer.parseInt(difficultyLevel);
+        return Double.parseDouble(difficultyLevel);
     }
 
     private static double getRating(int id) {
@@ -123,23 +123,52 @@ public class RateMyProfessorScraper {
 
         // Select elements with a class name containing "StyledFeedbackItem"
         Elements elements = doc.select("[class*=RatingValue__Numerator]");
-        String text = elements.first().text();
+        String text = elements.first().text().strip();
         return Double.parseDouble(text);
 
     }
+
+    public static String getDepartment(int id) {
+        String apiUrl = "https://www.ratemyprofessors.com/professor/" + id;
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(apiUrl))
+                .GET()
+                .build();
+
+
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        String html = response.body();
+
+        Document doc = Jsoup.parse(html);
+
+        // Select elements with a class name containing "StyledFeedbackItem"
+        Elements elements = doc.select("[class*=TeacherDepartment__StyledDepartmentLink]");
+        String text = elements.first().text().strip();
+        String department = text.replace("department", "").strip();
+
+        return department;
+    }
     public static void main(String[] args) {
 
-        int id = getRateMyProfessorId("Jessica Tripp");
+        int id = getRateMyProfessorId("Pope");
         
         int percentage = getWouldTakeAgainPercentage(id);
         System.out.println(percentage);
 
-        int difficulty = getDifficultyLevel(id);
+        double difficulty = getDifficultyLevel(id);
         System.out.println(difficulty);
 
         double rating = getRating(id);
         System.out.println(rating);
 
+        String department = getDepartment(id);
+        System.out.println(department);
 
     }
 }
