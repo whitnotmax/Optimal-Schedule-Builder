@@ -1,9 +1,14 @@
 package edu.uga.devdogs.course_information.Building;
 
+import edu.uga.devdogs.course_information.Class.ClassEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 import java.io.Serializable;
+import java.util.List;
 
 /*
  * Java JPA entity represention for Building
@@ -17,7 +22,13 @@ public class Building implements Serializable {
 
     // serves as the id.
     @Id
-    private long buildingNumber;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long buildingId;
+
+    /* This can't serve as the id, because many 
+    classes show the building number as NCRR or TBA/
+    */
+    private String buildingNumber;
 
     private String name;
 
@@ -27,6 +38,8 @@ public class Building implements Serializable {
      * Relationships
      * To-Do: add relationships (one-to-one, one-to-many, many-to-one, many-to-many) here
      */
+    @OneToMany(mappedBy = "building")
+    private List<ClassEntity> classes;
 
     /*
      * Constructors
@@ -43,7 +56,7 @@ public class Building implements Serializable {
     }
 
     // Constructor w/ buildingNumber
-    public Building(int buildingNumber, String name, String grid) {
+    public Building(String buildingNumber, String name, String grid) {
         this.buildingNumber = buildingNumber;
         this.name = name;
         this.grid = grid;
@@ -54,11 +67,15 @@ public class Building implements Serializable {
      * Getters and Setters
      */
 
-    public long getBuildingNumber() {
+    public String getBuildingNumber() {
         return buildingNumber;
     }
 
-    public void setBuildingNumber(int buildingNumber) {
+    public long getBuildingId() {
+        return buildingId;
+    }
+
+    public void setBuildingNumber(String buildingNumber) {
         this.buildingNumber = buildingNumber;
     }
 
@@ -78,6 +95,13 @@ public class Building implements Serializable {
         this.grid = grid;
     }
 
+    public List<ClassEntity> getClasses() {
+        return classes;
+    }
+
+    public void setClasses(List<ClassEntity> classes) {
+        this.classes = classes;
+    }
 
     /*
      * toString
